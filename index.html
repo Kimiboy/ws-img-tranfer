@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Native WebSocket Example</title>
+</head>
+<body>
+    <h1>
+        Let me show you img
+    </h1>
+    <div id = "img_container"></div>
+    <script>
+        // WebSocket Object Created
+        const ws = new WebSocket("ws://localhost:3000");
+
+        // Send the msg when connected
+        ws.onopen = function(event) {
+            ws.send("Client message: Send me the image!");
+        }
+
+        // Receive the img_url from Server
+        ws.onmessage = function(event) {
+            document.querySelector("#img_container").innerHTML = `<img src="${event.data}"/>`;
+            console.log("Server message: ", event.data);
+        }
+
+        // error event handler
+        ws.onerror = function(event) {
+            console.log("Server error message: ", event.data);
+        }
+    </script>
+</body>
+</html>
